@@ -2,5 +2,6 @@
 build/
 dist/
 sdist/
+virtualenv/
 *.pyc
 tests/*.db
