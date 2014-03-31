@@ -6,7 +6,6 @@ from languish import prefix_language
 
 
 
-
 class CompatibilityModeMiddleware:
     """Inspects user agent strings to see if an Internet Explorer browser
     is running in compatiblity mode and redirect to a compatibitly compatablity
