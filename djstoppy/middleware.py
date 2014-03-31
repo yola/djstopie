@@ -5,13 +5,6 @@ from django.shortcuts import redirect
 from languish import prefix_language
 
 
-def append_next_url(self, url, next):
-    next_url = urllib.quote_plus(next)
-    if url == next:
-        return url
-
-    return url + '?next=' + next_url
-
 
 
 class CompatibilityModeMiddleware:
@@ -20,7 +13,6 @@ class CompatibilityModeMiddleware:
     mode error page"""
 
     redirect = redirect
-    append_next_url = append_next_url
 
     def process_response(self, request, response):
 
@@ -30,7 +22,6 @@ class CompatibilityModeMiddleware:
 
 
         requested_url = request.get_full_path()
-        next_url = request.GET.get('next', '/')
         error_page = prefix_language(settings.COMPATIBILITY_URL)
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         is_error_page = request.path in error_page
@@ -39,11 +30,10 @@ class CompatibilityModeMiddleware:
 
 
         if unsupported_mode and is_trident and not is_error_page:
-            return self.redirect(self.append_next_url(error_page, requested_url))
+            return self.redirect(self._append_next_url(error_page, requested_url))
 
-        elif (request.GET.get('next') and is_error_page and
-                not unsupported_mode):
-            return self.redirect(next_url)
+        elif request.GET.get('next') and is_error_page:
+            return self._redirect_back_to_original_url(request)
 
         return response
 
@@ -55,6 +45,17 @@ class CompatibilityModeMiddleware:
 
         return False
 
+    def _append_next_url(self, url, next):
+        next_url = urllib.quote_plus(next)
+        if url == next:
+            return url
+
+        return url + '?next=' + next_url
+
+    def _redirect_back_to_original_url(self, request):
+        next_url = request.GET.get('next')
+        return self.redirect(next_url)
+
 
 
 class CheckBrowserMiddleware:
@@ -62,7 +63,6 @@ class CheckBrowserMiddleware:
     to an unsupported browsers page"""
 
     redirect = redirect
-    append_next_url = append_next_url
 
     def process_response(self, request, response):
 
@@ -70,20 +70,14 @@ class CheckBrowserMiddleware:
         if request.path.startswith(settings.STATIC_URL):
             return response
 
-        requested_url = request.get_full_path()
-        next_url = request.GET.get('next', '/')
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         unsupported_browser = self._is_browser_unsupported(user_agent)
         error_page = prefix_language(settings.UNSUPPORTED_URL)
         is_error_page = request.path in error_page
 
-
         if unsupported_browser and not is_error_page:
-            return self.redirect(self.append_next_url(error_page, requested_url))
+            return self.redirect(error_page)
 
-        elif (request.GET.get('next') and is_error_page and
-                not unsupported_browser):
-            return self.redirect(next_url)
 
         return response
 
