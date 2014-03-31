@@ -35,6 +35,14 @@ class CompatibilityModeMiddlewareTest(TestCase):
         response = self.cmw.process_response(self.request, self.response)
         self.assertEqual(self.response, response)
 
+    def test_redirect_to_next_url_after_compatibility_mode_is_off(self):
+        ie11 = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0)'
+        self.request.META['HTTP_USER_AGENT'] = ie11
+        url = settings.COMPATIBILITY_URL + '?next=/home'
+        self.request = self.factory.get(url)
+        response = self.cmw.process_response(self.request, self.response)
+        self.assertEqual(response, '/home')
+
 
 class CheckBrowserMiddlewareTest(TestCase):
 
