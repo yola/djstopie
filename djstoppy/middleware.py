@@ -8,9 +8,7 @@ from ua_parser import user_agent_parser
 
 
 class CompatibilityModeMiddleware:
-    """Inspects user agent strings to see if an Internet Explorer browser
-    is running in compatiblity mode and redirect to a compatibitly compatablity
-    mode error page"""
+    """Redirects IE browsers in compatibility mode to error page"""
 
     redirect = redirect
 
@@ -61,8 +59,7 @@ class CompatibilityModeMiddleware:
 
 
 class UnsupportedBrowsersMiddleware:
-    """Check settings for unsupported browser strings and redirect user
-    to an unsupported browsers page"""
+    """Redirects unsupported IE browsers to error page"""
 
     redirect = redirect
 
