@@ -19,17 +19,8 @@ Here is an example of a configured `setting.py` file:
 COMPATIBILITY_URL = 'compatibility-mode'
 UNSUPPORTED_URL = 'unsupported-browser'
 
-COMPATIBILITY_MODE_BROWSERS = (
-    'MSIE 7.0',
-    'MSIE 8.0'
-)
-
-UNSUPPORTED_BROWSERS = (
-    'MSIE 6.0',
-    'MSIE 6.1',
-    'MSIE 7.0',
-    'MSIE 8.0'
-)
+COMPATIBILITY_MODE_BROWSERS = ('7','8')
+UNSUPPORTED_BROWSERS = ('6','7','8')
 
 ```
 
