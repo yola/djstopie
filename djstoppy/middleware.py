@@ -16,18 +16,19 @@ class CompatibilityModeMiddleware:
             return response
 
         requested_url = request.get_full_path()
-        error_page = prefix_language(settings.COMPATIBILITY_URL)
-        is_error_page = request.path in error_page
+        error_page = settings.COMPATIBILITY_URL
+        is_error_page = error_page in request.path
+        next_url = request.GET.get('next', '')
 
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         user_agent_dict = user_agent_parser.Parse(user_agent)
         unsupported_mode = self._unsupported_compatiblity_mode(user_agent_dict)
 
         if unsupported_mode and not is_error_page:
-            return self.redirect(self._append_next_url(error_page, requested_url))
+            return self._redirect_to_error_page(error_page, requested_url)
 
-        elif request.GET.get('next') and is_error_page:
-            return self._redirect_back_to_original_url(request)
+        elif next_url and is_error_page:
+            return self._redirect_back_to_original_url(next_url)
 
         return response
 
@@ -49,9 +50,14 @@ class CompatibilityModeMiddleware:
 
         return url + '?next=' + next_url
 
-    def _redirect_back_to_original_url(self, request):
-        next_url = request.GET.get('next')
-        return self.redirect(next_url)
+    def _redirect_back_to_original_url(self, next_url):
+        return redirect(next_url)
+
+    def _redirect_to_error_page(self, error_page, original_url):
+        error_page = self._append_next_url(error_page, original_url)
+        error_page = prefix_language(error_page)
+
+        return redirect(error_page)
 
 
 
@@ -64,17 +70,14 @@ class UnsupportedBrowsersMiddleware:
         if request.path.startswith(settings.STATIC_URL):
             return response
 
-        error_page = prefix_language(settings.UNSUPPORTED_URL)
-        is_error_page = request.path in error_page
+        is_error_page = request.path in settings.UNSUPPORTED_URL
 
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         user_agent_dict = user_agent_parser.Parse(user_agent)
         unsupported_browser = self._is_browser_unsupported(user_agent_dict)
 
-
         if unsupported_browser and not is_error_page:
-            return self.redirect(error_page)
-
+            return self._redirect_to_error_page()
 
         return response
 
@@ -84,3 +87,7 @@ class UnsupportedBrowsersMiddleware:
         is_ie = user_agent['user_agent']['family'] == 'IE'
 
         return version in settings.UNSUPPORTED_BROWSERS and is_ie
+
+    def _redirect_to_error_page(self):
+        error_page = prefix_language(settings.UNSUPPORTED_URL)
+        return redirect(error_page)

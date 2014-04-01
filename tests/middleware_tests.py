@@ -15,7 +15,7 @@ class CompatibilityModeMiddlewareTest(TestCase):
         self.request = self.factory.get(self.requested_url)
         self.response = Mock()
         self.cmw = CompatibilityModeMiddleware()
-        self.cmw.redirect = lambda x: x
+        self.cmw._redirect_to_error_page = lambda x, y: settings.COMPATIBILITY_URL
 
     def test_middleware_redirects_ie7_compatiblity_mode(self):
         ie7Compat = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C)'
@@ -40,6 +40,7 @@ class CompatibilityModeMiddlewareTest(TestCase):
         self.request.META['HTTP_USER_AGENT'] = ie11
         url = settings.COMPATIBILITY_URL + '?next=/home'
         self.request = self.factory.get(url)
+        self.cmw._redirect_back_to_original_url = lambda x: x
         response = self.cmw.process_response(self.request, self.response)
         self.assertEqual(response, '/home')
 
@@ -52,7 +53,7 @@ class CheckBrowserMiddlewareTest(TestCase):
         self.request = self.factory.get(self.requested_url)
         self.response = Mock()
         self.cbmw = UnsupportedBrowsersMiddleware()
-        self.cbmw.redirect = lambda x: x
+        self.cbmw._redirect_to_error_page = lambda: settings.UNSUPPORTED_URL
 
     def test_redirect_unsupported_browser(self):
         self.request.META['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)'
