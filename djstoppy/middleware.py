@@ -2,12 +2,27 @@ import urllib
 
 from django.conf import settings
 from django.shortcuts import redirect
-from languish import prefix_language
 from ua_parser import user_agent_parser
 
+class BrowserRedirectBase:
 
-class CompatibilityModeMiddleware:
+    def prefix_language(self, url):
+        prefix = settings.LANGUAGE_PREFIX
+
+        if not prefix:
+          return url
+
+        elif hasattr(url, '__call__'):
+          return prefix(url)
+
+        elif isinstance(url, basestring):
+          return prefix + url
+
+
+
+class CompatibilityModeMiddleware(BrowserRedirectBase):
     """Redirects IE browsers in compatibility mode to error page"""
+
 
     def process_response(self, request, response):
 
@@ -61,7 +76,7 @@ class CompatibilityModeMiddleware:
 
 
 
-class UnsupportedBrowsersMiddleware:
+class UnsupportedBrowsersMiddleware(BrowserRedirectBase):
     """Redirects unsupported IE browsers to error page"""
 
     def process_response(self, request, response):

@@ -36,3 +36,6 @@ MIDDLEWARE_CLASSES = (
     'djstoppy.middleware.UnsupportedBrowsersMiddleware'
 )
 ```
+
+djstoppy also excepts an option `LANGUAGE_PREFIX` variable. This will prefix
+redirected urls, either by calling a function or by prepending a string.
