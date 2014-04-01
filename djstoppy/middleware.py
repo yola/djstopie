@@ -6,7 +6,6 @@ from languish import prefix_language
 from ua_parser import user_agent_parser
 
 
-
 class CompatibilityModeMiddleware:
     """Redirects IE browsers in compatibility mode to error page"""
 
