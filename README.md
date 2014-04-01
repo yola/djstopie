@@ -1,5 +1,10 @@
 # djstoppy
 
+## Why?
+
+Because, at some point you may need to drop an old version of IE.
+
+![Alt man who refuses to read](http://i.minus.com/i2EAQUnIGLyXD.gif)
 
 ## Features
 
