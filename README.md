@@ -3,7 +3,7 @@
 
 ## Features
 
-* Redirects unsupported browsers to a custom error page
+* Redirects unsupported IE browsers to a custom error page
 * Separately redirects IE browsers in compatibility mode
 
 ## Installation and configuration
