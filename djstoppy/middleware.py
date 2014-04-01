@@ -3,6 +3,7 @@ import urllib
 from django.conf import settings
 from django.shortcuts import redirect
 from languish import prefix_language
+from ua_parser import user_agent_parser
 
 
 
@@ -19,16 +20,15 @@ class CompatibilityModeMiddleware:
         if request.path.startswith(settings.STATIC_URL):
             return response
 
-
         requested_url = request.get_full_path()
         error_page = prefix_language(settings.COMPATIBILITY_URL)
-        user_agent = request.META.get('HTTP_USER_AGENT', '')
         is_error_page = request.path in error_page
-        unsupported_mode = self._is_unsupported_compatiblity_mode(user_agent)
-        is_trident = user_agent.find('Trident') != -1
 
+        user_agent = request.META.get('HTTP_USER_AGENT', '')
+        user_agent_dict = user_agent_parser.Parse(user_agent)
+        unsupported_mode = self._unsupported_compatiblity_mode(user_agent_dict)
 
-        if unsupported_mode and is_trident and not is_error_page:
+        if unsupported_mode and not is_error_page:
             return self.redirect(self._append_next_url(error_page, requested_url))
 
         elif request.GET.get('next') and is_error_page:
@@ -37,12 +37,15 @@ class CompatibilityModeMiddleware:
         return response
 
 
-    def _is_unsupported_compatiblity_mode(self, user_agent):
-        for mode in settings.COMPATIBILITY_MODE_BROWSERS:
-            if mode in user_agent:
-                return True
+    def _unsupported_compatiblity_mode(self, user_agent):
+        version = user_agent['user_agent']['major']
+        is_trident = 'Trident' in user_agent['string']
+        is_ie = user_agent['user_agent']['family'] == 'IE'
 
-        return False
+        unsupported_version = version in settings.COMPATIBILITY_MODE_BROWSERS
+
+        return unsupported_version and is_trident and is_ie
+
 
     def _append_next_url(self, url, next):
         next_url = urllib.quote_plus(next)
@@ -69,10 +72,13 @@ class UnsupportedBrowsersMiddleware:
         if request.path.startswith(settings.STATIC_URL):
             return response
 
-        user_agent = request.META.get('HTTP_USER_AGENT', '')
-        unsupported_browser = self._is_browser_unsupported(user_agent)
         error_page = prefix_language(settings.UNSUPPORTED_URL)
         is_error_page = request.path in error_page
+
+        user_agent = request.META.get('HTTP_USER_AGENT', '')
+        user_agent_dict = user_agent_parser.Parse(user_agent)
+        unsupported_browser = self._is_browser_unsupported(user_agent_dict)
+
 
         if unsupported_browser and not is_error_page:
             return self.redirect(error_page)
@@ -82,8 +88,7 @@ class UnsupportedBrowsersMiddleware:
 
 
     def _is_browser_unsupported(self, user_agent):
-        for version in settings.UNSUPPORTED_BROWSERS:
-            if version in user_agent:
-                return True
+        version = user_agent['user_agent']['major']
+        is_ie = user_agent['user_agent']['family'] == 'IE'
 
-        return False
+        return version in settings.UNSUPPORTED_BROWSERS and is_ie
