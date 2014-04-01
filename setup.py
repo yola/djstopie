@@ -8,7 +8,7 @@ setup(
     description=djstoppy.__doc__,
     author='Yola',
     author_email='engineers@yola.com',
-    url=djstoppy.__urls__,
+    url=djstoppy.__url__,
     packages=['djstoppy'],
     test_suite='nose.collector',
     install_requires=[
