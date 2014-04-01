@@ -57,7 +57,7 @@ class CompatibilityModeMiddleware:
 
 
 
-class CheckBrowserMiddleware:
+class UnsupportedBrowsersMiddleware:
     """Check settings for unsupported browser strings and redirect user
     to an unsupported browsers page"""
 

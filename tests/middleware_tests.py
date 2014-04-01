@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from mock import Mock, patch
 
-from djstoppy.middleware import CheckBrowserMiddleware, CompatibilityModeMiddleware
+from djstoppy.middleware import UnsupportedBrowsersMiddleware, CompatibilityModeMiddleware
 from django.conf import settings
 
 
@@ -51,7 +51,7 @@ class CheckBrowserMiddlewareTest(TestCase):
         self.requested_url = '/home'
         self.request = self.factory.get(self.requested_url)
         self.response = Mock()
-        self.cbmw = CheckBrowserMiddleware()
+        self.cbmw = UnsupportedBrowsersMiddleware()
         self.cbmw.redirect = lambda x: x
 
     def test_redirect_unsupported_browser(self):
