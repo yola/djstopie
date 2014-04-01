@@ -9,8 +9,6 @@ from ua_parser import user_agent_parser
 class CompatibilityModeMiddleware:
     """Redirects IE browsers in compatibility mode to error page"""
 
-    redirect = redirect
-
     def process_response(self, request, response):
 
         # skip over static assets
@@ -59,8 +57,6 @@ class CompatibilityModeMiddleware:
 
 class UnsupportedBrowsersMiddleware:
     """Redirects unsupported IE browsers to error page"""
-
-    redirect = redirect
 
     def process_response(self, request, response):
 
