@@ -53,9 +53,10 @@ class CompatibilityModeMiddleware(BrowserRedirectBase):
         is_trident = 'Trident' in user_agent['string']
         is_ie = user_agent['user_agent']['family'] == 'IE'
 
-        unsupported_version = version in settings.COMPATIBILITY_MODE_BROWSERS
+        if is_ie:
+          return int(version) < settings.LAST_SUPPORTED_MODE and is_trident
 
-        return unsupported_version and is_trident and is_ie
+        return True
 
 
     def _append_next_url(self, url, next):
@@ -101,7 +102,10 @@ class UnsupportedBrowsersMiddleware(BrowserRedirectBase):
         version = user_agent['user_agent']['major']
         is_ie = user_agent['user_agent']['family'] == 'IE'
 
-        return version in settings.UNSUPPORTED_BROWSERS and is_ie
+        if is_ie:
+          return int(version) < settings.LAST_SUPPORTED_BROWSER
+
+        return True
 
     def _redirect_to_error_page(self):
         error_page = prefix_language(settings.UNSUPPORTED_URL)
