@@ -13,7 +13,7 @@ Because, at some point you may need to drop an old version of IE.
 
 ## Installation and configuration
 
-djstoppy requires a tuple of `UNSUPPORTED_BROWSERS` and `COMPATIBILITY_MODE_BROWSERS`
+djstoppy requires a intiger of the `LAST_SUPPORTED_BROWSER` and `LAST_SUPPORTED_MODE `
 to be configured in the projets `settings.py` file. In addition it also requires
 an `UNSUPPORTED_URL` and `COMPATIBILITY_URL` to be configures; these urls are
 used to redirect the user to a custom error page.
@@ -24,8 +24,8 @@ Here is an example of a configured `setting.py` file:
 COMPATIBILITY_URL = 'compatibility-mode'
 UNSUPPORTED_URL = 'unsupported-browser'
 
-COMPATIBILITY_MODE_BROWSERS = ('7','8')
-UNSUPPORTED_BROWSERS = ('6','7','8')
+LAST_SUPPORTED_MODE = 9
+LAST_SUPPORTED_BROWSER = 9
 
 ```
 
@@ -42,5 +42,5 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
-djstoppy also excepts an option `LANGUAGE_PREFIX` variable. This will prefix
+djstoppy also excepts an optional `LANGUAGE_PREFIX` variable. This will prefix
 redirected urls, either by calling a function or by prepending a string.
