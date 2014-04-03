@@ -16,6 +16,5 @@ setup(
         'PyYAML==3.10',
         'ua-parser==0.3.5',
         'user-agents==0.2.0',
-        'languish==0.0.3',
     ]
 )
