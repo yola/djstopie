@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 
-class CompatibilityModeMiddlewareTest(TestCase):
+class CompatibilityModeTest(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -45,7 +45,7 @@ class CompatibilityModeMiddlewareTest(TestCase):
         self.assertEqual(response, '/home')
 
 
-class CheckBrowserMiddlewareTest(TestCase):
+class CheckBrowserTest(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
