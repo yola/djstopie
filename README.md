@@ -9,7 +9,7 @@ Because, at some point you may need to drop an old version of IE.
 ## Features
 
 * Redirects unsupported IE browsers to a custom error page
-* Separately redirects IE browsers in compatibility mode
+
 
 ## Installation and configuration
 
