@@ -21,8 +21,8 @@ used to redirect the user to a custom error page.
 Here is an example of a configured `setting.py` file:
 
 ```python
-COMPATIBILITY_URL = 'compatibility-mode'
-UNSUPPORTED_URL = 'unsupported-browser'
+COMPATIBILITY_URL = '/compatibility-mode'
+UNSUPPORTED_URL = '/unsupported-browser'
 
 LAST_SUPPORTED_MODE = 9
 LAST_SUPPORTED_BROWSER = 9
