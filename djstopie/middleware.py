@@ -31,7 +31,6 @@ class UnsupportedBrowsersMiddleware:
         if is_ie:
           return int(version) < settings.LAST_SUPPORTED_BROWSER
 
-        return True
 
     def _redirect_to_error_page(self):
         error_page = self.prefix_language(settings.UNSUPPORTED_URL)
