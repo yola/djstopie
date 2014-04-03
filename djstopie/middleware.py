@@ -8,16 +8,13 @@ class UnsupportedBrowsersMiddleware:
 
     def process_response(self, request, response):
 
-        # skip over static assets
-        if request.path.startswith(settings.STATIC_URL):
-            return response
-
+        static_asset = request.path.startswith(settings.STATIC_URL):
         is_error_page = self._is_error_page(request.path)
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         user_agent_dict = user_agent_parser.Parse(user_agent)
         unsupported_browser = self._is_browser_unsupported(user_agent_dict)
 
-        if unsupported_browser and not is_error_page:
+        if unsupported_browser and not is_error_page and not static_asset:
             return self._redirect_to_error_page()
 
         return response
