@@ -50,4 +50,4 @@ class UnsupportedBrowsersMiddleware:
           return prefix + url
 
     def _is_error_page(self, url):
-        return url.startswith(settings.UNSUPPORTED_URL)
+        return settings.UNSUPPORTED_URL in url
