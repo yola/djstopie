@@ -1,4 +1,4 @@
-# djstoppy
+# djstopie
 
 ## Why?
 
@@ -13,7 +13,7 @@ Because, at some point you may need to drop an old version of IE.
 
 ## Installation and configuration
 
-djstoppy requires a intiger of the `LAST_SUPPORTED_BROWSER` and `LAST_SUPPORTED_MODE `
+djstopie requires a intiger of the `LAST_SUPPORTED_BROWSER` and `LAST_SUPPORTED_MODE `
 to be configured in the projets `settings.py` file. In addition it also requires
 an `UNSUPPORTED_URL` and `COMPATIBILITY_URL` to be configures; these urls are
 used to redirect the user to a custom error page.
@@ -37,10 +37,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     ...
-    'djstoppy.middleware.CompatibilityModeMiddleware',
-    'djstoppy.middleware.UnsupportedBrowsersMiddleware'
+    'djstopie.middleware.CompatibilityModeMiddleware',
+    'djstopie.middleware.UnsupportedBrowsersMiddleware'
 )
 ```
 
-djstoppy also excepts an optional `LANGUAGE_PREFIX` variable. This will prefix
+djstopie also excepts an optional `LANGUAGE_PREFIX` variable. This will prefix
 redirected urls, either by calling a function or by prepending a string.

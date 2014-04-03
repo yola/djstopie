@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from mock import Mock, patch
 
-from djstoppy.middleware import UnsupportedBrowsersMiddleware, CompatibilityModeMiddleware
+from djstopie.middleware import UnsupportedBrowsersMiddleware, CompatibilityModeMiddleware
 from django.conf import settings
 
 
