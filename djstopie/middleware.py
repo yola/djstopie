@@ -28,8 +28,7 @@ class UnsupportedBrowsersMiddleware:
         version = user_agent['user_agent']['major']
         is_ie = user_agent['user_agent']['family'] == 'IE'
 
-        if is_ie:
-          return int(version) < settings.LAST_SUPPORTED_BROWSER
+        return is_ie and int(version) < settings.LAST_SUPPORTED_BROWSER
 
 
     def _redirect_to_error_page(self):
