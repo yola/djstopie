@@ -8,7 +8,7 @@ class UnsupportedBrowsersMiddleware:
 
     def process_response(self, request, response):
 
-        static_asset = request.path.startswith(settings.STATIC_URL):
+        static_asset = request.path.startswith(settings.STATIC_URL)
         is_error_page = self._is_error_page(request.path)
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         user_agent_dict = user_agent_parser.Parse(user_agent)
@@ -24,7 +24,6 @@ class UnsupportedBrowsersMiddleware:
         is_ie = user_agent['user_agent']['family'] == 'IE'
 
         return is_ie and int(version) < settings.LAST_SUPPORTED_BROWSER
-
 
     def _redirect_to_error_page(self):
         error_page = self._prefix_language(settings.UNSUPPORTED_URL)
