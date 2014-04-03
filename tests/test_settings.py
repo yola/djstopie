@@ -4,7 +4,6 @@ TEMPLATE_DEBUG = DEBUG
 SECRET_KEY = 'fake_secret'
 ROOT_URLCONF = 'tests.urls'
 
-COMPATIBILITY_URL = '/compatibility-mode'
 UNSUPPORTED_URL = '/unsupported-browser'
 
 LAST_SUPPORTED_MODE = 9
