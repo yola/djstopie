@@ -17,13 +17,13 @@ class CompatibilityModeTest(TestCase):
         self.cmw = CompatibilityModeMiddleware()
         self.cmw._redirect_to_error_page = lambda x, y: settings.COMPATIBILITY_URL
 
-    def test_middleware_redirects_ie7_compatiblity_mode(self):
+    def test_redirects_ie7_compatiblity_mode(self):
         ie7Compat = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C)'
         self.request.META['HTTP_USER_AGENT'] = ie7Compat
         response = self.cmw.process_response(self.request, self.response)
         self.assertIn(settings.COMPATIBILITY_URL, response)
 
-    def test_middleware_redirects_ie8_compatiblity_mode(self):
+    def test_redirects_ie8_compatiblity_mode(self):
         ie8Compat = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C)'
         self.request.META['HTTP_USER_AGENT'] = ie8Compat
         response = self.cmw.process_response(self.request, self.response)
