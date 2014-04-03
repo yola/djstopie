@@ -33,11 +33,12 @@ class UnsupportedBrowsersMiddleware:
 
 
     def _redirect_to_error_page(self):
-        error_page = self.prefix_language(settings.UNSUPPORTED_URL)
+        error_page = self._prefix_language(settings.UNSUPPORTED_URL)
         return redirect(error_page)
 
     def prefix_language(self, url):
         prefix = settings.LANGUAGE_PREFIX
+    def _prefix_language(self, url):
 
         if not prefix:
           return url
