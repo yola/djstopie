@@ -37,4 +37,4 @@ MIDDLEWARE_CLASSES = (
 ```
 
 djstopie also excepts an optional `LANGUAGE_PREFIX` variable. This will prefix
-redirected urls, either by calling a function or by prepending a string.
+redirected urls, either by calling a function or by prefixing a string.
