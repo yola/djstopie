@@ -1,5 +1,3 @@
-import urllib
-
 from django.conf import settings
 from django.shortcuts import redirect
 from ua_parser import user_agent_parser
