@@ -71,7 +71,7 @@ class CompatibilityModeMiddleware(BrowserRedirectBase):
 
     def _redirect_to_error_page(self, error_page, original_url):
         error_page = self._append_next_url(error_page, original_url)
-        error_page = prefix_language(error_page)
+        error_page = self.prefix_language(error_page)
 
         return redirect(error_page)
 
@@ -108,5 +108,5 @@ class UnsupportedBrowsersMiddleware(BrowserRedirectBase):
         return True
 
     def _redirect_to_error_page(self):
-        error_page = prefix_language(settings.UNSUPPORTED_URL)
+        error_page = self.prefix_language(settings.UNSUPPORTED_URL)
         return redirect(error_page)
