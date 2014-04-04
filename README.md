@@ -15,7 +15,7 @@ Because, at some point you may need to drop an old version of IE.
 
 djstopie requires an intiger of the `LAST_SUPPORTED_BROWSER` to be configured in
 the projets `settings.py` file. In addition it also requires an `UNSUPPORTED_URL`
-to be configures; these urls are used to redirect the user to a custom error page.
+to be configured; this url is used to redirect the user to a custom error page.
 
 Here is an example of a configured `setting.py` file:
 
@@ -36,5 +36,5 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
-djstopie also excepts an optional `LANGUAGE_PREFIX` variable. This will prefix
-redirected urls, either by calling a function or by prefixing a string.
+djstopie also excepts a `LANGUAGE_PREFIX`. This will prefix redirected urls,
+either by calling a function or by prefixing a string.
