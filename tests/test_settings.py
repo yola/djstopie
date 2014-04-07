@@ -10,12 +10,7 @@ LAST_SUPPORTED_MODE = 9
 LAST_SUPPORTED_BROWSER = 9
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'tests/integration_tests.db'
-    }
-}
+DATABASES = {}
 
 INSTALLED_APPS = ()
 

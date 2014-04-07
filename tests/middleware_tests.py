@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import SimpleTestCase
 from django.test.client import RequestFactory
 from mock import Mock, patch
 
@@ -6,7 +6,7 @@ from djstopie.middleware import UnsupportedBrowsersMiddleware
 from django.conf import settings
 
 
-class CheckBrowserTest(TestCase):
+class CheckBrowserTest(SimpleTestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
