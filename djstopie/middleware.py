@@ -37,10 +37,10 @@ class UnsupportedBrowsersMiddleware:
         prefix = settings.LANGUAGE_PREFIX
 
         if hasattr(prefix, '__call__'):
-          return prefix(url)
+            return prefix(url)
 
         elif isinstance(prefix, basestring):
-          return prefix + url
+            return prefix + url
 
     def _is_error_page(self, url):
         return settings.UNSUPPORTED_URL in url
