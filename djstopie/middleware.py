@@ -4,7 +4,7 @@ from ua_parser import user_agent_parser
 
 
 class UnsupportedBrowsersMiddleware:
-    """Redirects unsupported IE browsers to error page"""
+    """Redirects unsupported IE browsers to error page."""
 
     def process_response(self, request, response):
 
