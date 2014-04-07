@@ -13,8 +13,6 @@ setup(
     test_suite='nose.collector',
     install_requires=[
         'django >= 1.4, <= 1.6',
-        'PyYAML==3.10',
-        'ua-parser==0.3.5',
-        'user-agents==0.2.0'
+        'ua-parser==0.3.5'
     ]
 )
