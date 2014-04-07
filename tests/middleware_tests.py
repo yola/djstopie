@@ -6,7 +6,7 @@ from djstopie.middleware import UnsupportedBrowsersMiddleware
 from django.conf import settings
 
 
-class CheckBrowserTest(SimpleTestCase):
+class CheckBrowserMiddlewareTest(SimpleTestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -20,7 +20,7 @@ class CheckBrowserTest(SimpleTestCase):
         response = self.cbmw.process_response(self.request, self.response)
         self.assertIn(settings.UNSUPPORTED_URL, response.url)
 
-    def test_IE_8_redirects_to_unsupported_browser(self):
+    def test_redirects_IE_8_to_unsupported_browser(self):
         self.request.META['HTTP_USER_AGENT'] = 'Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)'
         response = self.cbmw.process_response(self.request, self.response)
         self.assertIn('unsupported-browser', response.url)
