@@ -17,4 +17,6 @@ INSTALLED_APPS = ()
 STATIC_ROOT = 'tests.urls'
 STATIC_URL = '/fake_static_url/'
 
+MEDIA_URL = '/media/'
+
 LANGUAGE_PREFIX = ''

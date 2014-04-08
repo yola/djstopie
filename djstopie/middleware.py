@@ -7,14 +7,14 @@ class UnsupportedBrowsersMiddleware:
     """Redirects unsupported IE browsers to error page."""
 
     def process_response(self, request, response):
+        requested_url = request.path
+        whitelisted = self._white_listed_url(requested_url)
 
-        static_asset = request.path.startswith(settings.STATIC_URL)
-        is_error_page = self._is_error_page(request.path)
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         user_agent_dict = user_agent_parser.Parse(user_agent)
         unsupported_browser = self._is_browser_unsupported(user_agent_dict)
 
-        if unsupported_browser and not is_error_page and not static_asset:
+        if unsupported_browser and not whitelisted:
             return self._redirect_to_error_page()
 
         return response
@@ -42,5 +42,13 @@ class UnsupportedBrowsersMiddleware:
         elif isinstance(prefix, basestring):
             return prefix + url
 
-    def _is_error_page(self, url):
-        return settings.UNSUPPORTED_URL in url
+    def _white_listed_url(self, url):
+
+        # settings.WHITE_LISTED_URL_PATHS
+        # should it be startswith? remember language prefixing?
+
+        is_static_url = url.startswith(settings.STATIC_URL)
+        is_media_url = url.startswith(settings.MEDIA_URL)
+        is_error_page = settings.UNSUPPORTED_URL in url
+
+        return is_static_url or is_media_url or is_error_page
