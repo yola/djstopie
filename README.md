@@ -36,5 +36,9 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
-djstopie also excepts a `LANGUAGE_PREFIX`. This will prefix redirected urls,
+djstopie excepts a `LANGUAGE_PREFIX`. This will prefix redirected urls,
 either by calling a function or by prefixing a string.
+
+djstopie can also be configured to skip over urls with a given prefix. This can
+be configured by assigning a tuple of prefixes to the `WHITELISTED_URL_PATHS`
+variable in the setting.py file.
