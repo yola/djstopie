@@ -43,12 +43,12 @@ class UnsupportedBrowsersMiddleware:
             return prefix + url
 
     def _white_listed_url(self, url):
+        whitelisted = (settings.STATIC_URL, settings.MEDIA_URL)
 
-        # settings.WHITE_LISTED_URL_PATHS
-        # should it be startswith? remember language prefixing?
+        if hasattr(settings, 'WHITELISTED_URL_PATHS'):
+            whitelisted = whitelisted + settings.WHITELISTED_URL_PATHS
 
-        is_static_url = url.startswith(settings.STATIC_URL)
-        is_media_url = url.startswith(settings.MEDIA_URL)
+        is_whitelisted = url.startswith(whitelisted)
         is_error_page = settings.UNSUPPORTED_URL in url
 
-        return is_static_url or is_media_url or is_error_page
+        return is_whitelisted or is_error_page

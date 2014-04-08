@@ -20,3 +20,5 @@ STATIC_URL = '/fake_static_url/'
 MEDIA_URL = '/media/'
 
 LANGUAGE_PREFIX = ''
+
+WHITELISTED_URL_PATHS = ('js', 'i18n')

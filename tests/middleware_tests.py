@@ -30,3 +30,17 @@ class CheckBrowserMiddlewareTest(SimpleTestCase):
         self.request.META['HTTP_USER_AGENT'] = ie11
         response = self.cbmw.process_response(self.request, self.response)
         self.assertEqual(self.response, response)
+
+    def test_does_not_redirect_a_whitelisted_urls(self):
+        self.request.META['HTTP_USER_AGENT'] = self.IE8
+        url = settings.WHITELISTED_URL_PATHS[0] + '/app.js'
+        new_request = self.request = self.factory.get(url)
+        response = self.cbmw.process_response(new_request, self.response)
+        self.assertEqual(self.response, response)
+
+    def test_does_not_redirect_the_error_page(self):
+        self.request.META['HTTP_USER_AGENT'] = self.IE8
+        url = settings.UNSUPPORTED_URL
+        new_request = self.request = self.factory.get(url)
+        response = self.cbmw.process_response(new_request, self.response)
+        self.assertEqual(self.response, response)
