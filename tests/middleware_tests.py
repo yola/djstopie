@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 from django.test.client import RequestFactory
-from mock import Mock
+from mock import Mock, patch
 
 from djstopie.middleware import UnsupportedBrowsersMiddleware
 from django.conf import settings
@@ -15,36 +15,38 @@ class CheckBrowserMiddlewareTest(SimpleTestCase):
         self.response = Mock()
         self.cbmw = UnsupportedBrowsersMiddleware()
 
-        self.IE8 = 'Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)'
+        self.ua_dict = {
+            'major': 8,
+            'family': 'IE'
+        }
+
+        self.patcher = patch(
+            'djstopie.middleware.user_agent_parser',
+            Parse=Mock(return_value={'user_agent': self.ua_dict}))
+        self.patcher.start()
+
+    def tearDown(self):
+        self.patcher.stop
 
     def test_redirects_an_unsupported_browser(self):
-        self.request.META['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)'
         response = self.cbmw.process_response(self.request, self.response)
         self.assertIn(settings.UNSUPPORTED_URL, response.url)
 
-    def test_redirects_IE_8_to_unsupported_browser_page(self):
-        self.request.META['HTTP_USER_AGENT'] = self.IE8
-        response = self.cbmw.process_response(self.request, self.response)
-        self.assertIn('unsupported-browser', response.url)
-
     def test_does_not_redirect_supported_browsers(self):
-        ie11 = 'Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)'
-        self.request.META['HTTP_USER_AGENT'] = ie11
+        self.ua_dict['major'] = 9
         response = self.cbmw.process_response(self.request, self.response)
         self.assertEqual(self.response, response)
 
     def test_does_not_redirect_a_whitelisted_urls(self):
         request = self.factory.get(
             path=settings.WHITELISTED_URL_PATHS[0] + '/app.js',
-            HTTP_USER_AGENT=self.IE8
         )
         response = self.cbmw.process_response(request, self.response)
         self.assertEqual(self.response, response)
 
     def test_does_not_redirect_the_error_page(self):
         request = self.factory.get(
-            path=settings.UNSUPPORTED_URL,
-            HTTP_USER_AGENT=self.IE8
+            path=settings.UNSUPPORTED_URL
         )
         response = self.cbmw.process_response(request, self.response)
         self.assertEqual(self.response, response)
