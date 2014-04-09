@@ -1,5 +1,11 @@
 # djstopie
 
+[![Build Status](https://travis-ci.org/yola/djstopie.png)](https://travis-ci.org/yola/djstopie)
+[![Coverage Status](https://coveralls.io/repos/yola/djstopie/badge.png)](https://coveralls.io/r/yola/djstopie)
+[![Latest Version](https://pypip.in/v/djstopie/badge.png)](https://pypi.python.org/pypi/djstopie/)
+[![Downloads](https://pypip.in/d/djstopie/badge.png)](https://pypi.python.org/pypi/djstopie/)
+
+
 ## Why?
 
 Because, at some point you may need to drop an old version of IE.
