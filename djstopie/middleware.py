@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import redirect
-from importlib import import_module
+from imp import load_module
 from ua_parser import user_agent_parser
 
 
@@ -35,7 +35,7 @@ class UnsupportedBrowsersMiddleware:
         if not hasattr(settings, 'LANGUAGE_PREFIX'):
             return url
 
-        prefix = import_module(LANGUAGE_PREFIX)
+        prefix = load_module(LANGUAGE_PREFIX)
         return prefix(url)
 
 
