@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import redirect
+from django.utils.importlib import import_module
 from ua_parser import user_agent_parser
 
 
@@ -34,19 +35,21 @@ class UnsupportedBrowsersMiddleware:
         if not hasattr(settings, 'LANGUAGE_PREFIX'):
             return url
 
-        prefix = settings.LANGUAGE_PREFIX
+        module = settings.LANGUAGE_PREFIX.rpartition('.')[0]
+        method = settings.LANGUAGE_PREFIX.rpartition('.')[-1]
 
-        if hasattr(prefix, '__call__'):
-            return prefix(url)
+        lanuage_module = import_module(module)
 
-        elif isinstance(prefix, basestring):
-            return prefix + url
+        return getattr(lanuage_module, method)(url)
+
 
     def _white_listed_url(self, url):
         whitelisted = (settings.STATIC_URL, settings.MEDIA_URL)
 
         if hasattr(settings, 'WHITELISTED_URL_PATHS'):
             whitelisted = whitelisted + settings.WHITELISTED_URL_PATHS
+
+        whitelisted = filter(None, whitelisted)
 
         is_whitelisted = url.startswith(whitelisted)
         is_error_page = settings.UNSUPPORTED_URL in url
