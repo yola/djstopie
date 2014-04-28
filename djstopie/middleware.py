@@ -38,9 +38,9 @@ class UnsupportedBrowsersMiddleware:
         module = settings.LANGUAGE_PREFIX.rpartition('.')[0]
         method = settings.LANGUAGE_PREFIX.rpartition('.')[-1]
 
-        prefix = import_module(module)
+        lanuage_module = import_module(module)
 
-        return getattr(prefix, method)(url)
+        return getattr(lanuage_module, method)(url)
 
 
     def _white_listed_url(self, url):
