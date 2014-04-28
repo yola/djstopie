@@ -49,6 +49,8 @@ class UnsupportedBrowsersMiddleware:
         if hasattr(settings, 'WHITELISTED_URL_PATHS'):
             whitelisted = whitelisted + settings.WHITELISTED_URL_PATHS
 
+        whitelisted = filter(None, whitelisted)
+
         is_whitelisted = url.startswith(whitelisted)
         is_error_page = settings.UNSUPPORTED_URL in url
 
