@@ -35,7 +35,7 @@ class UnsupportedBrowsersMiddleware:
         if not hasattr(settings, 'LANGUAGE_PREFIX'):
             return url
 
-        module = settings.LANGUAGE_PREFIX.rpartition('.')[:-1][0]
+        module = settings.LANGUAGE_PREFIX.rpartition('.')[0]
         method = settings.LANGUAGE_PREFIX.rpartition('.')[-1]
 
         prefix = import_module(module)
