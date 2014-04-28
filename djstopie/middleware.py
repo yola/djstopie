@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import redirect
+from django.utils.importlib import import_module
 from ua_parser import user_agent_parser
 
 
@@ -34,14 +35,10 @@ class UnsupportedBrowsersMiddleware:
         if not hasattr(settings, 'LANGUAGE_PREFIX'):
             return url
 
-        import_list = settings.LANGUAGE_PREFIX.split('.')
-        module = '.'.join(import_list[:-1])
-        method = import_list[-1]
+        module = settings.LANGUAGE_PREFIX.rpartition('.')[:-1][0]
+        method = settings.LANGUAGE_PREFIX.rpartition('.')[-1]
 
-        try:
-            prefix = __import__(module)
-        except ImportError, e:
-            raise ImportError("Could not import '%s', error: %s" % (settings.LANGUAGE_PREFIX, e))
+        prefix = import_module(module)
 
         return getattr(prefix, method)(url)
 
