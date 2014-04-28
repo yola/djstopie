@@ -42,7 +42,7 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
-djstopie excepts a `LANGUAGE_PREFIX`. This will prefix redirected urls,
+djstopie accepts a `LANGUAGE_PREFIX`. This will prefix redirected urls,
 either by a function from a given module.
 
 djstopie can also be configured to skip over urls with a given prefix. This can
