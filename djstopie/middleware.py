@@ -34,8 +34,16 @@ class UnsupportedBrowsersMiddleware:
         if not hasattr(settings, 'LANGUAGE_PREFIX'):
             return url
 
-        prefix = __import__(settings.LANGUAGE_PREFIX, fromlist=[''])
-        return prefix(url)
+        import_list = settings.LANGUAGE_PREFIX.split('.')
+        module = '.'.join(import_list[:-1])
+        method = import_list[-1]
+
+        try:
+            prefix = __import__(module)
+        except ImportError, e:
+            raise ImportError("Could not import '%s', error: %s" % (settings.LANGUAGE_PREFIX, e))
+
+        return getattr(prefix, method)(url)
 
 
     def _white_listed_url(self, url):
