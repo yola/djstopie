@@ -19,8 +19,8 @@ Because, at some point you may need to drop an old version of IE.
 
 ## Installation and configuration
 
-djstopie requires an intiger of the `LAST_SUPPORTED_BROWSER` to be configured in
-the projets `settings.py` file. In addition it also requires an `UNSUPPORTED_URL`
+djstopie requires an integer of the `LAST_SUPPORTED_BROWSER` to be configured in
+the projects `settings.py` file. In addition it also requires an `UNSUPPORTED_URL`
 to be configured; this url is used to redirect the user to a custom error page.
 
 Here is an example of a configured `setting.py` file:
@@ -47,4 +47,4 @@ either by a function from a given module.
 
 djstopie can also be configured to skip over urls with a given prefix. This can
 be configured by assigning a tuple of prefixes to the `WHITELISTED_URL_PATHS`
-variable in the setting.py file.
+variable in the settings.py file.
