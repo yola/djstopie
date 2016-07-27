@@ -31,11 +31,12 @@ class UnsupportedBrowsersMiddleware:
         return redirect(error_page)
 
     def _prefix_language(self, url):
-        if not hasattr(settings, 'LANGUAGE_PREFIX'):
+        callable_path = getattr(settings, 'LANGUAGE_PREFIX', None)
+
+        if not callable_path:
             return url
 
-        return import_string(module)(url)
-
+        return import_string(callable_path)(url)
 
     def _white_listed_url(self, url):
         whitelisted = (settings.STATIC_URL, settings.MEDIA_URL)
