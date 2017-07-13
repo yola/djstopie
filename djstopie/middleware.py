@@ -3,8 +3,13 @@ from django.shortcuts import redirect
 from django.utils.module_loading import import_string
 from ua_parser import user_agent_parser
 
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
 
-class UnsupportedBrowsersMiddleware:
+
+class UnsupportedBrowsersMiddleware(MiddlewareMixin):
     """Redirects unsupported IE browsers to error page."""
 
     def process_response(self, request, response):
