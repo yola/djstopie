@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/yola/djstopie.png)](https://travis-ci.org/yola/djstopie)
 [![Coverage Status](https://coveralls.io/repos/yola/djstopie/badge.png)](https://coveralls.io/r/yola/djstopie)
-[![Latest Version](https://pypip.in/v/djstopie/badge.png)](https://pypi.python.org/pypi/djstopie/)
-[![Downloads](https://pypip.in/d/djstopie/badge.png)](https://pypi.python.org/pypi/djstopie/)
+[![Latest Version](https://img.shields.io/pypi/v/djstopie.svg)](https://pypi.python.org/pypi/djstopie/)
+[![Downloads](https://img.shields.io/pypi/dm/djstopie.svg)](https://pypi.python.org/pypi/djstopie/)
 
 
 ## Why?
