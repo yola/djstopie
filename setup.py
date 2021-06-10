@@ -12,7 +12,7 @@ setup(
     packages=['djstopie'],
     test_suite='nose.collector',
     install_requires=[
-        'django >= 1.11.0, < 1.12',
+        'django >= 1.11.0, < 2.3',
         'ua-parser==0.3.5'
     ]
 )
