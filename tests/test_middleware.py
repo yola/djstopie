@@ -7,7 +7,6 @@ from django.test.client import RequestFactory
 from djstopie.middleware import UnsupportedBrowsersMiddleware
 
 
-
 def sample_lang_prefixer(url):
     """Sample language prefixer"""
     return "lang-prefixed%s" % url
@@ -57,8 +56,7 @@ class CheckBrowserMiddlewareTest(SimpleTestCase):
         response = self.cbmw.process_response(request, self.response)
         self.assertEqual(self.response, response)
 
-    @override_settings(
-        LANGUAGE_PREFIX='tests.middleware_tests.sample_lang_prefixer')
+    @override_settings(LANGUAGE_PREFIX='tests.test_middleware.sample_lang_prefixer')
     def test_lang_prefixes_unsupported_url_using_specified_callable(self):
         response = self.cbmw.process_response(self.request, self.response)
         self.assertIn("lang-prefixed", response.url)
