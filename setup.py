@@ -10,9 +10,8 @@ setup(
     author_email='engineers@yola.com',
     url=djstopie.__url__,
     packages=['djstopie'],
-    test_suite='nose.collector',
     install_requires=[
-        'django >= 1.11.0, < 1.12',
-        'ua-parser==0.3.5'
+        'django >= 1.11.0, < 5',
+        'ua-parser == 0.18.0'
     ]
 )

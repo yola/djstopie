@@ -1,9 +1,10 @@
+from unittest.mock import Mock, patch
+
+from django.conf import settings
 from django.test import SimpleTestCase, override_settings
 from django.test.client import RequestFactory
-from mock import Mock, patch
 
 from djstopie.middleware import UnsupportedBrowsersMiddleware
-from django.conf import settings
 
 
 def sample_lang_prefixer(url):
@@ -55,8 +56,7 @@ class CheckBrowserMiddlewareTest(SimpleTestCase):
         response = self.cbmw.process_response(request, self.response)
         self.assertEqual(self.response, response)
 
-    @override_settings(
-        LANGUAGE_PREFIX='tests.middleware_tests.sample_lang_prefixer')
+    @override_settings(LANGUAGE_PREFIX='tests.test_middleware.sample_lang_prefixer')
     def test_lang_prefixes_unsupported_url_using_specified_callable(self):
         response = self.cbmw.process_response(self.request, self.response)
         self.assertIn("lang-prefixed", response.url)

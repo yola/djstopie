@@ -1,5 +1,9 @@
 # [Changelog](https://github.com/yola/djtopie/releases)
 
+# 3.0.0
+
+* Support Django 4.2.x and switch to ua-parser 0.18.0
+
 # 2.0.0
 
 * Add support for Django 1.11
