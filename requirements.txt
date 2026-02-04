@@ -1,7 +1,4 @@
-django==1.11.23
-ua-parser==0.3.5
+Django == 4.2.27
+ua-parser == 0.18.0
 
-coveralls==0.4.1
-mock==1.0
-nose==1.3
-pinocchio==0.4.1
+pytest == 8.3.4

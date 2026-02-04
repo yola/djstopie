@@ -1,9 +1,11 @@
+from unittest.mock import Mock, patch
+
+from django.conf import settings
 from django.test import SimpleTestCase, override_settings
 from django.test.client import RequestFactory
-from mock import Mock, patch
 
 from djstopie.middleware import UnsupportedBrowsersMiddleware
-from django.conf import settings
+
 
 
 def sample_lang_prefixer(url):
