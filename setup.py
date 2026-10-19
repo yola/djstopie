@@ -11,7 +11,7 @@ setup(
     url=djstopie.__url__,
     packages=['djstopie'],
     install_requires=[
-        'django >= 1.11.0, < 5',
+        'django >= 1.11.0, < 6',
         'ua-parser == 0.18.0'
     ]
 )
